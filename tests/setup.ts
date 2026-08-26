@@ -1,9 +1,19 @@
 import '@testing-library/jest-dom';
+import { cleanup } from '@testing-library/react';
+import { afterEach, vi } from 'vitest';
 
-// Mock canvas-confetti for clean tests
+// Automatically cleanup DOM after each test
+afterEach(() => {
+  cleanup();
+});
+
+// Mock canvas-confetti
 vi.mock('canvas-confetti', () => ({
   default: vi.fn()
 }));
+
+// Mock scrollIntoView for jsdom
+Element.prototype.scrollIntoView = vi.fn();
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {

@@ -206,7 +206,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSettings }) => {
             <button
               onClick={onOpenSettings}
               title="Settings & AI Model"
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 transition border border-transparent hover:border-slate-800"
+              aria-label="Settings & AI Model"
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 transition border border-transparent hover:border-slate-800 focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:outline-none"
             >
               <Settings className="w-4 h-4" />
             </button>

@@ -381,6 +381,8 @@ export const LandingPage: React.FC = () => {
                 ].map(tab => (
                   <button
                     key={tab.id}
+                    role="tab"
+                    aria-selected={activePreviewTab === tab.id}
                     onClick={() => setActivePreviewTab(tab.id as any)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold transition focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:outline-none ${
                       activePreviewTab === tab.id

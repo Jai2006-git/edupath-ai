@@ -10,6 +10,12 @@ export default defineConfig({
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],
     fileParallelism: false,
     isolate: false,
-    testTimeout: 10000
+    testTimeout: 10000,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.ts', 'src/**/*.tsx'],
+      exclude: ['src/main.tsx', 'src/vite-env.d.ts']
+    }
   }
 });
