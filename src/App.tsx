@@ -1,14 +1,17 @@
-import React, { useState, Component, ErrorInfo, ReactNode } from 'react';
+import React, { useState, Component, ErrorInfo, ReactNode, lazy, Suspense } from 'react';
 import { StudyPlanProvider, useStudyPlan } from './context/StudyPlanContext';
 import { Navbar } from './components/Navbar';
 import { SettingsModal } from './components/SettingsModal';
 import { RebalanceModal } from './components/RebalanceModal';
-import { LandingPage } from './pages/LandingPage';
-import { OnboardingWizard } from './pages/OnboardingWizard';
-import { DashboardView } from './pages/DashboardView';
-import { RoadmapView } from './pages/RoadmapView';
-import { QuizView } from './pages/QuizView';
-import { TutorView } from './pages/TutorView';
+import { LoadingSpinner } from './components/ui/LoadingSpinner';
+
+// Route-based code splitting for optimal production performance
+const LandingPage = lazy(() => import('./pages/LandingPage').then(m => ({ default: m.LandingPage })));
+const OnboardingWizard = lazy(() => import('./pages/OnboardingWizard').then(m => ({ default: m.OnboardingWizard })));
+const DashboardView = lazy(() => import('./pages/DashboardView').then(m => ({ default: m.DashboardView })));
+const RoadmapView = lazy(() => import('./pages/RoadmapView').then(m => ({ default: m.RoadmapView })));
+const QuizView = lazy(() => import('./pages/QuizView').then(m => ({ default: m.QuizView })));
+const TutorView = lazy(() => import('./pages/TutorView').then(m => ({ default: m.TutorView })));
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -44,7 +47,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 this.setState({ hasError: false });
                 window.location.reload();
               }}
-              className="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition"
+              className="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition focus-visible:ring-2 focus-visible:ring-brand-500"
             >
               Reload Application
             </button>
@@ -66,24 +69,26 @@ const MainContent: React.FC = () => {
       {/* Top Navbar */}
       <Navbar onOpenSettings={() => setIsSettingsOpen(true)} />
 
-      {/* Main Routed Page */}
+      {/* Main Routed Page with Suspense Fallback */}
       <main className="flex-1">
-        {activeView === 'landing' && <LandingPage />}
-        {activeView === 'onboarding' && <OnboardingWizard />}
-        {activeView === 'dashboard' && (
-          <DashboardView onOpenRebalance={() => setIsRebalanceOpen(true)} />
-        )}
-        {activeView === 'roadmap' && (
-          <RoadmapView onOpenRebalance={() => setIsRebalanceOpen(true)} />
-        )}
-        {activeView === 'quiz' && <QuizView />}
-        {activeView === 'tutor' && <TutorView />}
+        <Suspense fallback={<LoadingSpinner size="lg" label="Loading EduPath AI module..." className="min-h-[60vh]" />}>
+          {activeView === 'landing' && <LandingPage />}
+          {activeView === 'onboarding' && <OnboardingWizard />}
+          {activeView === 'dashboard' && (
+            <DashboardView onOpenRebalance={() => setIsRebalanceOpen(true)} />
+          )}
+          {activeView === 'roadmap' && (
+            <RoadmapView onOpenRebalance={() => setIsRebalanceOpen(true)} />
+          )}
+          {activeView === 'quiz' && <QuizView />}
+          {activeView === 'tutor' && <TutorView />}
+        </Suspense>
       </main>
 
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-slate-950/80 py-6 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p>© {new Date().getFullYear()} EduPath AI — Your Personal AI Learning & Study Companion.</p>
+          <p>© {new Date().getFullYear()} EduPath AI — Democratizing Personalized Education with Adaptive AI.</p>
           <div className="flex items-center gap-4 text-[11px] text-slate-400">
             <span>Adaptive AI Roadmaps</span>
             <span>•</span>

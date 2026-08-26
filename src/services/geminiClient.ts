@@ -1,6 +1,7 @@
 /**
- * Low-level Gemini API Client for EduPath AI
- * Handles API key retrieval, network timeouts, response parsing, and error normalization.
+ * Gemini Client for EduPath AI
+ * Supports both secure serverless proxy (/api/gemini) and direct client-side fallback.
+ * Includes timeout protection, error normalization, and resilient JSON extraction.
  */
 
 export interface GeminiResponse {
@@ -60,6 +61,31 @@ export async function callGemini(
   timeoutMs: number = 15000
 ): Promise<string> {
   const apiKey = getActiveApiKey(userProvidedKey);
+
+  // 1. If running on Vercel deployment with serverless proxy and no client key
+  if (!apiKey && typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+    try {
+      const proxyRes = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt,
+          systemInstruction,
+          temperature,
+          maxOutputTokens
+        })
+      });
+
+      if (proxyRes.ok) {
+        const proxyData = await proxyRes.json();
+        if (proxyData?.text) {
+          return proxyData.text;
+        }
+      }
+    } catch (e) {
+      // Fallback to client-side
+    }
+  }
 
   if (!apiKey) {
     throw new Error('NO_API_KEY');
@@ -131,6 +157,8 @@ export async function callGemini(
  * Extracts and safely parses JSON from raw markdown or fenced response
  */
 export function extractJsonFromText<T>(rawText: string): T | null {
+  if (!rawText || typeof rawText !== 'string') return null;
+
   try {
     // 1. Direct parse attempt
     return JSON.parse(rawText.trim()) as T;

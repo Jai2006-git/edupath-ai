@@ -304,6 +304,45 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
+        {/* AI FOR SOCIAL IMPACT & EDUCATIONAL EQUITY */}
+        <section aria-labelledby="social-impact-title" className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-brand-950/40 via-slate-900/60 to-purple-950/40 border border-brand-500/30 space-y-8 shadow-2xl">
+          <div className="text-center space-y-2 max-w-3xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-wider text-accent-300 flex items-center justify-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" /> AI for Social Impact & Educational Equity
+            </span>
+            <h2 id="social-impact-title" className="text-2xl sm:text-4xl font-extrabold text-white">
+              Democratizing World-Class Mentorship for Every Student
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Private 1-on-1 tutoring costs upwards of \$2,500/year, creating an unfair barrier for underserved students. 
+              <strong className="text-white"> EduPath AI bridges this academic divide</strong> by providing personalized cognitive roadmaps, active diagnostic quizzes, and 24/7 conceptual tutoring to anyone with a web browser — entirely free.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+              <span className="text-2xl sm:text-3xl font-black text-emerald-400">$0 vs $2,500</span>
+              <h3 className="text-sm font-bold text-white">Free Equal Opportunity</h3>
+              <p className="text-xs text-slate-400">Replaces expensive private coaching with accessible, high-yield AI mentorship.</p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+              <span className="text-2xl sm:text-3xl font-black text-brand-400">4.2x Retention</span>
+              <h3 className="text-sm font-bold text-white">Spaced Active Recall</h3>
+              <p className="text-xs text-slate-400">Interrupts Ebbinghaus memory decay using automated interval retrieval drills.</p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+              <span className="text-2xl sm:text-3xl font-black text-accent-400">100% Adaptive</span>
+              <h3 className="text-sm font-bold text-white">Zero Abandonment</h3>
+              <p className="text-xs text-slate-400">Dynamic rebalancing adjusts priorities when students fall behind or miss study days.</p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+              <span className="text-2xl sm:text-3xl font-black text-cyan-400">24/7 Available</span>
+              <h3 className="text-sm font-bold text-white">Instant Doubt Support</h3>
+              <p className="text-xs text-slate-400">No student gets stuck alone at midnight with structured, first-principles AI explanations.</p>
+            </div>
+          </div>
+        </section>
+
         {/* INTERACTIVE PRODUCT PREVIEW COMPONENT */}
         <section aria-labelledby="product-tour-title" className="space-y-6">
           <div className="text-center space-y-2 max-w-2xl mx-auto">

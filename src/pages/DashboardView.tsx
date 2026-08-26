@@ -341,6 +341,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onOpenRebalance })
                   Subtopics: {nextRecommendedMilestone.topics.slice(0, 2).join(', ')}
                 </span>
               </div>
+
+              {/* Explainable AI Rationale */}
+              <div className="pt-1 flex items-center gap-1.5 text-[11px] text-brand-300">
+                <Sparkles className="w-3.5 h-3.5 text-brand-400 flex-shrink-0" />
+                <span>
+                  <strong>Why Recommended:</strong> Highest examination probability weight in current phase + unlocks dependent subtopics.
+                </span>
+              </div>
             </div>
 
             <div className="flex items-center gap-2 flex-shrink-0">
